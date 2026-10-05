@@ -1,6 +1,7 @@
 ---
-layout: main
+layout: topics-index
 title: Learn Reference Guide
+stylesheet: /assets/css/topics-index.css
 ---
 
 # Learn Reference Guide
