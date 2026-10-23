@@ -1,48 +1,25 @@
-    <div class="col-md-4 col-lg-3 mb-4">
-      <div class="p-3 border border-secondary rounded" style="background-color: #0d1117;">
-        <h6 class="text-muted text-uppercase mb-3" style="font-size: 0.75em; letter-spacing: 1px;">Algorithm Index</h6>
-
-        <div class="accordion accordion-flush" id="algoAccordion">
-          {% assign algos = site.pages | where: "layout", "algo" %}
-          {% assign categories = algos | group_by: "category" | sort: "name" %}
-
-          {% for cat in categories %}
-            {% assign cat_id = cat.name | slugify %}
-            <div class="accordion-item bg-transparent border-0 mb-1">
-
-              <!-- Category Header (Changed from h2 to div to fix giant text) -->
-              <div class="accordion-header" id="heading-{{ cat_id }}">
-                <button class="accordion-button {% unless page.category == cat.name %}collapsed{% endunless %} bg-transparent shadow-none p-2"
-                        type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ cat_id }}"
-                        aria-expanded="{% if page.category == cat.name %}true{% else %}false{% endif %}"
-                        aria-controls="collapse-{{ cat_id }}"
-                        style="font-size: 0.90em; color: {% if page.category == cat.name %}#58a6ff{% else %}#c9d1d9{% endif %};">
-                  <span class="{% if page.category == cat.name %}fw-bold{% endif %}">
-                    {{ cat.name }}
-                  </span>
-                </button>
-              </div>
-
-              <!-- Collapsible Algorithm List -->
-              <div id="collapse-{{ cat_id }}" class="accordion-collapse collapse {% if page.category == cat.name %}show{% endif %}"
-                   aria-labelledby="heading-{{ cat_id }}" data-bs-parent="#algoAccordion">
-                <div class="accordion-body p-0 pt-1 pb-2 ps-3">
-                  <div class="nav flex-column border-start border-secondary ps-2 ms-2">
-                    {% assign current_algos = algos | where: "category", cat.name | sort: "title" %}
-                    {% for algo in current_algos %}
-                      <a href="{{ algo.url | relative_url }}"
-                         class="nav-link px-2 py-1 {% if page.url == algo.url %}fw-bold{% else %}text-muted{% endif %}"
-                         style="font-size: 0.85em; color: {% if page.url == algo.url %}#c9d1d9{% else %}inherit{% endif %};">
-                        {{ algo.title }}
-                      </a>
-                    {% endfor %}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          {% endfor %}
-        </div>
-
-      </div>
-    </div>
+<aside class="article-sidebar">
+  <nav class="article-nav" aria-label="Related topics">
+    <a class="back-to-library" href="{{ '/' | relative_url }}">&larr; All subjects</a>
+    <details open>
+      <summary>In this collection</summary>
+      <ul>
+        {% for topic in page.catalog_siblings %}
+        <li>
+          <a href="{{ topic.url | relative_url | uri_escape }}"{% if page.url == topic.url %} aria-current="page"{% endif %}>{{ topic.title | escape }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </details>
+    {% if page.catalog_node.children.size > 0 %}
+    <details open>
+      <summary>Explore {{ page.title | escape }}</summary>
+      <ul>
+        {% for topic in page.catalog_node.children %}
+        <li><a href="{{ topic.url | relative_url | uri_escape }}">{{ topic.title | escape }}</a></li>
+        {% endfor %}
+      </ul>
+    </details>
+    {% endif %}
+  </nav>
+</aside>

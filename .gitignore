@@ -1,0 +1,6 @@
+/_site/
+/.jekyll-cache/
+/.jekyll-metadata
+/.bundle/
+/vendor/bundle/
+__pycache__/

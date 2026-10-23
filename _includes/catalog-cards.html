@@ -1,0 +1,19 @@
+<div class="catalog-grid">
+  {% for topic in include.nodes %}
+  <article class="topic-card">
+    <p class="eyebrow">{% if topic.article %}ARTICLE{% else %}COLLECTION{% endif %}</p>
+    <h2><a href="{{ topic.url | relative_url | uri_escape }}">{{ topic.title | escape }} <span aria-hidden="true">&rarr;</span></a></h2>
+    <p class="catalog-meta">{{ topic.count }} {% if topic.count == 1 %}article{% else %}articles{% endif %}</p>
+    {% if topic.children.size > 0 %}
+    <ul class="topic-preview">
+      {% for child in topic.children limit: 5 %}
+      <li><a href="{{ child.url | relative_url | uri_escape }}">{{ child.title | escape }}</a></li>
+      {% endfor %}
+    </ul>
+    {% if topic.children.size > 5 %}
+    <a class="view-all" href="{{ topic.url | relative_url | uri_escape }}">View all {{ topic.children.size }} topics &rarr;</a>
+    {% endif %}
+    {% endif %}
+  </article>
+  {% endfor %}
+</div>

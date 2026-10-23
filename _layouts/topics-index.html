@@ -3,5 +3,50 @@ layout: main
 ---
 
 <main class="topics-index">
+  {% if page.catalog_node %}{% include breadcrumbs.html %}{% endif %}
+  <header class="catalog-header">
+    <p class="eyebrow">THE LEARNING LIBRARY</p>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="catalog-intro">{% if page.description %}{{ page.description | escape }}{% else %}Explore the topics in {{ page.title | escape }}. Each article brings together explanations, examples, and further reading.{% endif %}</p>
+    {% assign node = page.catalog_node | default: site.data.catalog %}
+    <p class="catalog-meta">{{ node.count }} {% if node.count == 1 %}article{% else %}articles{% endif %} <span aria-hidden="true">/</span> {{ node.children.size }} {% if page.catalog_node %}{% if node.children.size == 1 %}topic{% else %}topics{% endif %}{% else %}{% if node.children.size == 1 %}discipline{% else %}disciplines{% endif %}{% endif %}</p>
+  </header>
+
+  {% unless page.catalog_node %}
+  <div class="catalog-search" hidden>
+    <label for="article-search">Find something to learn</label>
+    <input id="article-search" type="search" placeholder="Search articles, subjects, or categories..." autocomplete="off" aria-controls="search-results">
+  </div>
+  <section id="search-results" hidden aria-labelledby="search-heading">
+    <h2 id="search-heading">Search results</h2>
+    <p id="search-status" role="status" aria-live="polite"></p>
+    <ul class="article-results">
+      {% for article in site.data.learn_articles %}
+      <li data-search-text="{{ article.title | append: ' ' | append: article.context | escape }}" hidden>
+        <a href="{{ article.url | relative_url | uri_escape }}">{{ article.title | escape }}<small>{{ article.context | escape }}</small></a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endunless %}
+
+  <section id="catalog-browse" aria-label="Browse topics">
+    {% if page.catalog_node %}
+    {% include catalog-cards.html nodes=node.children %}
+    {% else %}
+    {% for discipline in site.data.catalog.children %}
+    <section class="discipline-section">
+      <div class="discipline-heading">
+        <h2><a href="{{ discipline.url | relative_url | uri_escape }}">{{ discipline.title | escape }}</a></h2>
+        <span class="catalog-meta">{{ discipline.count }} {% if discipline.count == 1 %}article{% else %}articles{% endif %}</span>
+      </div>
+      {% include catalog-cards.html nodes=discipline.children %}
+    </section>
+    {% endfor %}
+    {% endif %}
+  </section>
   {{ content }}
 </main>
+{% unless page.catalog_node %}
+<script src="{{ '/assets/js/catalog-search.js' | relative_url }}" defer></script>
+{% endunless %}

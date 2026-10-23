@@ -1,11 +1,6 @@
 ---
 layout: main
 ---
-<!-- 1. Rouge/Pygments Syntax Theme (RRT) -->
-<link rel="stylesheet" href="/assets/css/rrt.css">
-<!-- 2. Single, Robust MathJax v2 Configuration -->
-<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML-full"></script>
-<!-- <script async src="{{ '/assets/js/mathjax_init.js' | relative_url }}"></script> -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({
     tex2jax: {
@@ -18,56 +13,47 @@ layout: main
     }
   });
 </script>
-<!-- 3. Clean up Rouge's default line number table borders -->
-<link rel="stylesheet" href="/assets/css/rogue.css">
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML-full"></script>
 
-<div class="container-fluid mt-4">
-  <div class="row">
-    <!-- LEFT NAVBAR: Responsive & Compact Accordion -->
-    {% include left_navbar.html %}
+<div class="article-shell">
+  {% include left_navbar.html %}
+  <main class="article-main">
+    <article class="post">
+      <header class="post-header">
+        {% include breadcrumbs.html %}
+        <h1 class="post-title">{{ page.title | escape }}</h1>
+      </header>
 
-    <!-- MAIN CONTENT: Algorithm Post -->
-    <div class="col-md-8 col-lg-9 ps-md-4">
-      <article class="post">
-
-        <header class="post-header mb-4">
-          <h1 class="post-title fw-bold">{{ page.title }}</h1>
-        </header>
-
-        <!-- Attribution & Visualizer Banner -->
-        {% if page.attribution_sources %}
-        <div style="padding: 15px; background-color: rgba(255,255,255,0.05); border-left: 4px solid #58a6ff; margin-bottom: 30px; font-size: 0.9em; border-radius: 0 4px 4px 0;">
-          <strong class="text-light">Attribution:</strong> <span class="text-secondary">The conceptual explanations and original code structures below are adapted from:
+      {% if page.attribution_sources %}
+      <aside class="attribution" aria-label="Sources">
+        <strong>Built on shared knowledge</strong>
+        <p>The explanations and code below are adapted from:</p>
+        <ul>
           {% for src in page.attribution_sources %}
-            {% if src == "Algorithm Visualizer Project" %}
-            <br><a href="https://github.com/algorithm-visualizer/algorithms" target="_blank" class="text-primary text-decoration-none"><img src="{{ '/assets/icons/algorithm_visualizer.png' | relative_url }}" alt="Algorithm Visualizer" class="img-fluid" style="max-height: 20px;"> Algorithm Visualizer</a> project
-            {% elsif src == "GeeksforGeeks" %}
-            <br><a href="https://www.geeksforgeeks.org" target="_blank" class="text-primary text-decoration-none"><img src="{{ '/assets/icons/gfg-gg-logo.svg' | relative_url }}" alt="GeeksforGeeks" class="img-fluid" style="max-height: 20px;"> GeeksforGeeks</a>
-            {% elsif src == "Trekhleb" %}
-            <br><a href="https://github.com/trekhleb/javascript-algorithms" target="_blank" class="text-primary text-decoration-none">JavaScript Algorithms</a> project
-            {% endif %}
+          {% if src == "Algorithm Visualizer Project" %}
+          <li><a href="https://github.com/algorithm-visualizer/algorithms">Algorithm Visualizer</a></li>
+          {% elsif src == "GeeksforGeeks" %}
+          <li><a href="https://www.geeksforgeeks.org">GeeksforGeeks</a></li>
+          {% elsif src == "Trekhleb" %}
+          <li><a href="https://github.com/trekhleb/javascript-algorithms">JavaScript Algorithms</a></li>
+          {% else %}
+          <li>{{ src | escape }}</li>
+          {% endif %}
           {% endfor %}
-          {% if page.viz_url %}
-          <div class="mt-2">
-            &#128279; <a href="{{ page.viz_url }}" target="_blank" class="text-info text-decoration-none"><strong>View the interactive visualization for {{ page.title }} here.</strong></a>
-          </div>
-          {% endif %}
-          {% if page.gfg_url %}
-          <div class="mt-2">
-            &#128279; <a href="{{ page.gfg_url }}" target="_blank" class="text-info text-decoration-none"><strong>View the original article for {{ page.title }} here.</strong></a>
-          </div>
-          {% endif %}
-        </span>
-        </div>
+        </ul>
+        {% if page.viz_url %}
+        <a href="{{ page.viz_url | escape }}">Interactive visualization &rarr;</a>
         {% endif %}
-        <!-- Rendered Markdown Body -->
-        <div class="post-content text-light">
-          {{ content }}
-        </div>
+        {% if page.gfg_url %}
+        <a href="{{ page.gfg_url | escape }}">Original article &rarr;</a>
+        {% endif %}
+      </aside>
+      {% endif %}
 
-      </article>
-    </div>
-
-  </div>
+      <div class="post-content">
+        {{ content }}
+      </div>
+    </article>
+  </main>
 </div>
 <script src="{{ '/assets/js/code_tab.js' | relative_url }}"></script>

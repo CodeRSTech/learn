@@ -1,19 +1,10 @@
-<nav class="navbar navbar-expand-lg border-bottom border-secondary py-3">
-  <div class="container">
-    <a class="navbar-brand text-light fw-bold terminal-prompt" href="/">{{ site.data.navigation.brand }}</a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav gap-3">
-        {% for link in site.data.navigation.links %}
-        <li class="nav-item">
-          <a class="nav-link text-white-50 hover-text-light" href="{{ link.url }}">{{ link.title }}</a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="site-brand" href="{{ '/' | relative_url }}">{{ site.data.navigation.brand | escape }}<span class="brand-dot">.</span></a>
+    <ul class="site-nav-links">
+      {% for link in site.data.navigation.links %}
+      <li><a href="{% if link.url == '/' %}{{ '/' | relative_url }}{% else %}{{ link.url }}{% endif %}">{{ link.title | escape }}</a></li>
+      {% endfor %}
+    </ul>
   </div>
 </nav>

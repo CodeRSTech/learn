@@ -1,17 +1,6 @@
-<footer class="py-4 mt-5 border-top border-secondary">
-  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
-    <div class="text-white-50 small mb-2 mb-md-0">
-      <span class="text-primary">root@coderstech:~$</span> exit
-      <br>
-      &copy; {{ site.time | date: "%Y" }} R&D LAB. All rights reserved.
-    </div>
-    <div class="d-flex gap-3">
-      <!-- Reusing the socials data from your profiles.yml -->
-      {% for social in site.data.profiles.socials %}
-        <a href="{{ social.url }}" class="text-white-50 hover-text-light fs-5 transition-all">
-          <i class="{{ social.icon }}"></i>
-        </a>
-      {% endfor %}
-    </div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>Stay curious. Keep learning.</span>
+    <span>A personal learning library. Original sources credited in each article.</span>
   </div>
 </footer>

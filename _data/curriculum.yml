@@ -1,7 +1,7 @@
-- discipline: "computer-science"
+- discipline: "Computer Science"
   folder: "computer-science"
   subjects:
-    - name: "algorithms"
+    - name: "Algorithms"
       folder: "algorithms"
       categories:
         - name: "Backtracking"

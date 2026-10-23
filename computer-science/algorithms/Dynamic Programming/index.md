@@ -1,5 +1,4 @@
 ---
-layout: main
+layout: topics-index
+title: Dynamic Programming
 ---
-
-# Dynamic Programming 
