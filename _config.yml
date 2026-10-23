@@ -7,6 +7,11 @@ plugins:
   - jekyll-tabs
 exclude:
   - node_modules
+  - tests
+  - README.md
+  - ROADMAP.md
+  - Gemfile
+  - Gemfile.lock
 kramdown:
   syntax_highlighter_opts:
     block:
