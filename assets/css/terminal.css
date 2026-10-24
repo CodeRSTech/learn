@@ -1,0 +1,287 @@
+:root {
+  /* Core Backgrounds */
+  --bg-base: #09090b;
+  --bg-surface: #121212;
+  --border-ghost: #37373a;
+
+  /* Typography - Readable Defaults */
+  --text-main: #f4f4f5;
+  --text-muted: #b1b1ba;
+
+  /* Cyber Accents */
+  --accent-green: #00ff66;
+  --accent-cyan: #00ffff;
+  --accent-magenta: #ff00ff;
+  --accent-yellow: #ffff00;
+  --accent-orange: #ff7700;
+
+  --bs-body-font-family: 'Fira Code', monospace;
+}
+
+/* Base Body Application */
+body {
+  padding-top: 0 !important;
+  background-color: var(--bg-base) !important;
+  color: var(--text-main) !important;
+  font-family: var(--bs-body-font-family), serif !important;
+
+  /* 1. Terminal Grid + 2. Pinned Top Cyber Orbs */
+  background-image:
+    linear-gradient(rgba(0, 255, 40, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 40, 0.05) 1px, transparent 1px),
+
+    /* Shifted coordinates to top (10%, 5%, 20%) and reduced fade spread (40%) */
+    radial-gradient(circle at 15% 10%, rgba(0, 255, 255, 0.12), transparent 40%),
+    radial-gradient(circle at 85% 5%, rgba(0, 255, 102, 0.12), transparent 40%),
+    radial-gradient(circle at 50% 20%, rgba(0, 100, 255, 0.10), transparent 40%);
+
+  /* X is 150% for horizontal panning, Y is 100% to lock them to the top */
+  background-size: 30px 30px, 30px 30px, 150% 100%, 150% 100%, 150% 100%;
+  background-attachment: fixed;
+
+  /* Adjusted animation for horizontal drifting only */
+  animation: cyberAurora 15s ease-in-out infinite alternate;
+}
+
+@keyframes cyberAurora {
+  /* Animate background-position X axis, leave Y at 0 */
+  0% { background-position: 0 0, 0 0, 0% 0, 100% 0, 50% 0; }
+  100% { background-position: 0 0, 0 0, 100% 0, 0% 0, 10% 0; }
+}
+
+/* Card & Container Overrides */
+.bg-dark, .bg-black, .card {
+  background-color: var(--bg-surface) !important;
+  border-radius: 4px !important;
+}
+
+/* Ghost Borders */
+.border-secondary, .border-bottom, .border, .border-top {
+  border-color: var(--border-ghost) !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6, .text-light {
+  color: var(--text-main) !important;
+  padding-top: 0.3em;
+  padding-bottom: 0.15em;
+}
+p, small, .text-white-50 {
+  color: var(--text-muted) !important;
+}
+
+/* Implemented in post.html */
+.scrollspy-navbar {
+  top: 4.5rem;
+  z-index: 1020;
+  border-radius: 0 !important;
+}
+
+/* Bootstrap Accent Mappings */
+.text-primary { color: var(--accent-green) !important; }
+.text-info { color: var(--accent-cyan) !important; }
+.text-danger { color: var(--accent-magenta) !important; }
+
+/* Upgraded Primary Button */
+.btn-primary {
+  position: relative;
+  background-color: transparent !important; /* Start hollow */
+  border: 1px solid var(--accent-green) !important;
+  color: var(--accent-green) !important;
+  font-weight: 600;
+  border-radius: 2px !important;
+  overflow: hidden; /* Keeps the laser animation inside the button */
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+/* The scanning laser line */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  z-index: -1;
+  transition: left 0.6s ease;
+}
+
+/* The Hover State: Fills background, creates massive glow, and triggers the laser */
+.btn-primary:hover {
+  background-color: var(--accent-green) !important;
+  color: #000000 !important;
+  box-shadow: 0 0 15px var(--accent-green),
+              0 0 30px rgba(0, 255, 102, 0.4),
+              inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+/* The Terminal Prompt styling */
+.terminal-prompt::before {
+  content: "root@system:~$ ";
+  color: var(--accent-cyan);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-ghost);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green);
+}
+
+/* ---------------------------------------------------
+   Post Content Images
+----------------------------------------------------- */
+.post-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 1.5rem auto;
+}
+
+/* ---------------------------------------------------
+   Markdown Table Styling (Mobile Responsive)
+----------------------------------------------------- */
+/* Compact Tables & Code Blocks on Mobile */
+@media (max-width: 767.98px) {
+  table, .rouge-table pre {
+    font-size: 0.8rem; /* Shrinks text specifically in tables/code */
+  }
+
+  /* Reduce cell padding */
+  table td, table th, .rouge-table td {
+    padding: 0.25rem 0.4rem !important;
+  }
+
+  /* Ensure code blocks don't force page widening */
+  .highlight pre {
+    margin-bottom: 0.5rem;
+  }
+}
+
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+    display: block;      /* Establishes scrolling context for mobile */
+    overflow-x: auto;    /* Enables horizontal scroll */
+    white-space: nowrap; /* Prevents column text squishing */
+}
+
+.post-content th,
+.post-content td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-ghost);
+}
+
+.post-content th {
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: bold;
+    color: var(--accent-cyan);
+}
+
+/* --- Interactive Cyber Cards --- */
+
+/* 1. Base Card Styling (Frosted & Semi-transparent) */
+.card {
+  background-color: rgba(18, 18, 18, 0.7) !important; /* Slightly transparent */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important; /* Bouncy transition */
+  border: 1px solid var(--border-ghost) !important;
+  z-index: 1;
+}
+
+/* 2. Global Hover State for all Cards */
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 255, 255, 0.3) !important; /* Faint cyan border on hover */
+  box-shadow: 0 10px 30px -10px rgba(0, 255, 255, 0.15),
+              inset 0 0 20px rgba(0, 255, 255, 0.02);
+  z-index: 2;
+}
+
+/* 3. Upgrading your existing .hover-overlay elements (Images & Icons) */
+.hover-overlay {
+  transition: all 0.3s ease;
+}
+
+.hover-overlay:hover {
+  border-color: var(--accent-green) !important;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+  transform: scale(1.05);
+}
+
+/* 4. Glowing text effect for the tags inside cards on hover */
+.card:hover .text-white-50 {
+  color: #e4e4e7 !important;
+  transition: color 0.3s ease;
+}
+/* end of interactive cards */
+
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 0.5rem;
+  z-index: 2000;
+  background: #000;
+  color: #fff;
+  border: 2px solid var(--accent-green);
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+@media (hover: none) {
+  .card:hover,
+  .hover-overlay:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  body {
+    background-attachment: scroll;
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.experiment-summary {
+  cursor: pointer;
+}

@@ -114,6 +114,18 @@ class CatalogTest(unittest.TestCase):
                 self.assertTrue(links.navigation)
                 self.assert_links_exist(links.navigation + links.assets, destination, baseurl)
 
+    def test_shared_terminal_theme_loads_after_local_fallback_styles(self):
+        for baseurl, destination in self.outputs.items():
+            shared_theme = baseurl + "/assets/css/terminal.css"
+            for path in destination.rglob("index.html"):
+                assets = PageLinks(path.read_text()).assets
+                with self.subTest(path=path, baseurl=baseurl):
+                    self.assertEqual(assets.count(shared_theme), 1)
+                    self.assertLess(assets.index(baseurl + "/assets/css/learn.css"),
+                                    assets.index(shared_theme))
+                    self.assertLess(assets.index(baseurl + "/assets/css/topics-index.css"),
+                                    assets.index(shared_theme))
+
     def test_all_generated_collection_links_resolve(self):
         for baseurl, destination in self.outputs.items():
             for path in destination.rglob("index.html"):
@@ -146,7 +158,7 @@ class CatalogTest(unittest.TestCase):
     def test_existing_collection_has_automatic_topic_links(self):
         for destination in self.outputs.values():
             html = (destination / "computer-science/algorithms/Dynamic Programming/index.html").read_text()
-            self.assertIn('class="topic-card"', html)
+            self.assertIn('class="topic-card card"', html)
             self.assertIn("Knapsack Problem", html)
 
 

@@ -40,7 +40,7 @@
   padding: clamp(1.25rem, 3vw, 2rem);
   border: 1px solid var(--learn-border);
   border-radius: 0.75rem;
-  background: linear-gradient(135deg, #1b252e, var(--learn-surface) 65%);
+  background: var(--bg-surface, linear-gradient(135deg, #1b252e, var(--learn-surface) 65%));
 }
 .discipline-section + .discipline-section { margin-top: 3rem; }
 .discipline-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1rem; margin-bottom: 1.25rem; }

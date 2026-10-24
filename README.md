@@ -63,7 +63,14 @@ cards are populated automatically.
 
 Landing pages use responsive collection cards with article counts. Articles
 provide breadcrumbs, a sticky contextual sidebar, and child-topic links.
-The shared theme and navigation are local assets; math rendering still uses MathJax.
+The primary theme is the main site's shared
+[`terminal.css`](https://coderstech.github.io/assets/css/terminal.css), bundled at
+`assets/css/terminal.css` and loaded after the local layout styles. Learning-page
+colors use its terminal palette, and
+collection cards use its interactive card styling. If the shared stylesheet
+cannot load, the existing local theme in `assets/css/learn.css` and
+`assets/css/topics-index.css` remains the fallback, without requiring JavaScript.
+Navigation uses local assets; math rendering still uses MathJax.
 The homepage search runs locally in the browser and matches article titles and
 their full collection paths. Browsing remains available without JavaScript.
 Local navigation and assets respect Jekyll's `baseurl`, including spaces and
