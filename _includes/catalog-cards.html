@@ -1,6 +1,6 @@
 <div class="catalog-grid">
   {% for topic in include.nodes %}
-  <article class="topic-card">
+  <article class="topic-card card">
     <p class="eyebrow">{% if topic.article %}ARTICLE{% else %}COLLECTION{% endif %}</p>
     <h2><a href="{{ topic.url | relative_url | uri_escape }}">{{ topic.title | escape }} <span aria-hidden="true">&rarr;</span></a></h2>
     <p class="catalog-meta">{{ topic.count }} {% if topic.count == 1 %}article{% else %}articles{% endif %}</p>
